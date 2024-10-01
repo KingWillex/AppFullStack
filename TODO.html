@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags for character set and viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title of the page -->
+    <title>todo list</title>
+</head>
+    <body>
+        <input type="text" placeholder="add task" id="newTask">
+        <button onclick="addTask()">add</button>
+    </body>
+    <ul id="tasklist">
+<li>fish</li>
+    </ul>
+    <!-- <div id="feedbackDiv"></div> -->
+   
+    <script>
+        function addTask(){
+        
+const newTask= document.querySelector("#newTask");
+const addedTasks= {
+    task: newTask.value,
+};
+const node = document.createElement("li");
+const textnode =document.createTextNode(newTask.value)
+node.appendChild(textnode);
+
+if(textnode == ""){
+    alert("Task can't be empty");
+    return;
+}
+else{
+document.getElementById("tasklist").appendChild(node);
+
+document.getElementById("newTask").value="";
+        }}
+    </script>
+
+</html>
