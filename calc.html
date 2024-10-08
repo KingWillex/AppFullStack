@@ -1,14 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!-- Meta tags for character set and viewport -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Title of the page -->
-    <title>todo list</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
+        <link
+            rel="stylesheet” href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/5.15.1/css/all.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BlackWatch</title>
+    </head>
     <body>
-<p>X</p>
-<input t
+
+        <div id="app"><header>
+                <h1 v-text="sitename"></h1>
+            </header>
+        
+        <div id="cart">
+            <button v-onclick='showCheckout'><!-- 'cartItemCount' is used the same way as a data property. -->
+                {{ cartItemCount}}
+                <!-- add the cart icon -->
+                <span class="fas fa-cart-plus"></span> Checkout
+            </button>
+        </div>
+        <main>
+<div v-for="product in products" :key= "products.id">
+        
+           <img id="prodIm":src="products.image" :alt="products.title">
+            <h2 products.title></h2>
+            <p v-text="products.description"></p>
+            <p>Inventory: {{products.inventory}}</p>
+            <!-- The double curly brackets is used instead of 'v-text' -->
+            <p>Price: {{products.price}}</p>
+            <button v-on:click="addToCart" v-show="canAddToCart">
+                Add to cart
+            </button>
+            <button disabled='disabled' v-else>App to cart</button>
+ 
+
+            <div v-if='showproducts'>
+                <!-- the code for the products page -->
+                </div>
+                <div v-else>
+                <!-- the code for the checkout page -->
+                
+                </div>
+                
+            </div>
+        </main>
+    </div>
+
+        <script type="text/javascript">
+        let webstore =  new Vue({ // The Vue instance
+        el: '#app', // The 'option object': DOM mounting point
+        data: { // the 'data' option
+// the key 'sitename' matches the value of 'v-text' earlier
+sitename: 'BlackWatch',
+products:
+[
+   { id: 100,
+    title: 'BlackWatch',
+    price: 199.99,
+    description: 'A stylish and comfortable watch',
+    image: '124.png',
+    inventory:10
+},
+{
+    id: 101,
+    title:" Fish Sticks",//MAKE A BABY OIL ONE diddy 
+    price: 99.99,
+    description: "A <em>delicious<em>'" + "treat for you and all your lovely pets",
+    image: 'images/12.png',
+    inventory:5
+ }
+
+],
+ cart:[]
+},
+computed:{
+    cartItemCount: function() {
+        return this.cart.length;
+    },
+    canAddToCart: function() {
+        return this.products.inventory > this.cartItemCount;
+ },
+},
+        methods: { // the 'methods' option
+            addToCart: function() {
+                this.cart.push(this.products.id);
+            },
+            showCheckout() {
+            this.showproducts = this.showproducts ? false : true;
+ },
+
+        }
+     });
+        </script>
     </body>
 </html>

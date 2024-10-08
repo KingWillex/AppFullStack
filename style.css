@@ -1,0 +1,50 @@
+.productsStyle{
+    max-width: 300px;
+    max-height: 300px;
+    border: 10px solid rgb(209, 208, 208);
+    padding: 5px;
+    margin: 2px;
+    cursor: pointer;
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.3)); 
+display: table-cell;
+}
+
+.productsStyle img{
+    width: 200px;
+    height: 200px;
+    padding-left: 50px;
+    object-fit: cover;  
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;  
+    z-index: 1;
+    overflow: hidden;
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.3));
+}
+
+.productsStyle h3
+{
+    text-align: center;
+    margin: 0;
+}
+
+.productsStyle p{
+    text-align: center;
+    margin: 0;
+}
+
+#cartButton{
+    position: relative;
+    margin-left:36% ;
+}
+#cart{
+    
+    position: absolute; 
+    top: 30px;
+     right: 0px; 
+}
+#header {
+text-align: center;
+top:0px;
+position: relative;
+}
