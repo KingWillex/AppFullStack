@@ -5,90 +5,153 @@
         <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
         <link rel="stylesheet" href="../style.css">
         <link
-        <link rel="stylesheet” href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/5.15.1/css/all.min.css">
+            <link
+            rel="stylesheet” href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/5.15.1/css/all.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BlackWatch</title>
     </head>
-    
+
     <body>
         <div id="app">
             <header>
-            <h1 id="header" v-text="sitename"></h1>
-        </header>
+                <h1 id="header" v-text="sitename"></h1>
+            </header>
 
-        <div id="cart">
-            <button v-onclick='showCheckout'><!-- 'cartItemCount' is used the same way as a data property. -->
-                {{ cartItemCount}}
-                <!-- add the cart icon -->
-                <span class="fas fa-cart-plus"></span> Checkout
-            </button>
-        </div>
+            <div id="cart">
+                <button v-if="showProduct" v-on:click="showCheckout">
+                    <!-- 'cartItemCount' is used the same way as a data property. -->
+                    {{ cartItemCount }}
+                    <span class="fas fa-cart-plus"></span> Checkout
+                </button><!-- add the cart icon -->
+                <button v-else v-on:click="showProductPage">
+                    <span class="fas fa-cart-plus"></span> Back to Products
+                </button>
+            </div>
 
-        
-
-        <div id="app">
-                <div class="productsStyle" v-for="product in products" :key="products.id">
-                        <img :src="'images/' + product.image" alt="product image">
-                        <h3>{{ product.title }}</h3>
-                        <p>Price: ${{ product.price }}</p>
-                        <p>Description: {{ product.description }}</p>
-                        <button id="cartButton" v-if="canAddToCart" @click="addToCart(product)">Add to Cart</button>
-                        <span v-else>Out of stock</span>
+            <div v-if="showProduct">
+                <div class="productsStyle" v-for="product in products"
+                    :key="product.id">
+                    <img :src="'images/' + product.image" alt="product image">
+                    <h3>{{ product.title }}</h3>
+                    <p>Price: ${{ product.price }}</p>
+                    <p>Description: {{ product.description }}</p>
+                    <p>Inventory: {{ product.inventory }}</p>
+                    <div v-if="product.inventory > 0">
+                        <button id="cartButton" @click="addToCart(product)">Add
+                            to Cart</button>
+                    </div>
+                    <div v-else>
+                        <p>Sorry, this product is currently out of stock.</p>
                     </div>
                 </div>
             </div>
 
-            <script type="text/javascript">
-        let webstore =  new Vue({ // The Vue instance
-        el: '#app', // The 'option object': DOM mounting point
-        data: { // the 'data' option
-// the key 'sitename' matches the value of 'v-text' earlier
-sitename: 'BlackWatch',
-products:
-[
-   { id: 100,
-    title: 'BlackWatch',
-    price: 199.99,
-    description: 'A stylish and comfortable watch',
-    image: '124.png',
-    inventory:10
-},
-{
-    id: 101,
-    title:" Fish Sticks",//MAKE A BABY OIL ONE diddy 
-    price: 99.99,
-    description: "A delicious " + "treat for you and all your lovely pets",
-    image: '12.png',
-    inventory:5
- }
+            <div v-else>
+                <!-- checkout code here -->
+                <h1>Checkout</h1>
+                <p>
+                    <strong>First Name:</strong>
+                    <!-- This input field is bound to 'firstName' in the 'order' object -->
+                    <input v-model="order.firstName" />
+                </p>
+                <p>
+                    <strong>Last Name:</strong>
+                    <!-- This input field is bound to 'lastName' in the 'order' object -->
+                    <input v-model="order.lastName" />
+                </p>
+               
+                    <strong>Email:</strong>
+                    <!-- This input field is bound to 'email' in the 'order' object -->
+                    <input v-model="order.email" />
+                </p>
+        
+                <p>
+                    <strong>Address:</strong> <input v-model="order.address" />
+                </p>
+                <p>
+                    <strong>City:</strong> <input v-model="order.city" />
+                </p>
 
-],
- cart:[]
-},
-computed:{
-    cartItemCount: function() {
-        return this.cart.length;
-    },
-    canAddToCart: function() {
-            return this.products.inventory > this.cartItemCount;
-     },
-},
-        methods: { // the 'methods' option
-        addToCart: function(product) {
-                if(this.canAddToCart(product)) {
-                    this.cart.push(product.id);
-                    product.inventory--;
+                <h2>Order Information</h2>
+                <p>First Name: {{order.firstName}}</p>
+                <p>Last Name: {{order.lastName}}</p>
+                <p>Address: {{order.address}}</p>
+                <p>City: {{order.city}}</p>
+                <p>Email: {{order.email}}</p>
+                <p>zip:{{order.zip}}</p>
+                <p>state:</p>
+                <p>
+                    <strong>Total Price:</strong> ${{ totalPrice }}
+                </p>
+                
+                <p>Thank you for shopping with us!</p>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            let webstore = new Vue({
+              el: '#app',
+              data: {
+                sitename: 'BlackWatch',
+                products: [
+                  {
+                    id: 100,
+                    title: 'BlackWatch',
+                    price: 199.99,
+                    description: 'A stylish and comfortable watch',
+                    image: '124.png',
+                    inventory: 10
+                  },
+                  {
+                    id: 101,
+                    title: "Fish Sticks",
+                    price: 99.99,
+                    description: "A delicious treat for you and all your lovely pets",
+                    image: '12.png',
+                    inventory: 5
+                  }
+                ],
+                cart: [],
+                showProduct: true,
+                order:[
+                    {
+                firstName: '',
+                lastName: '',
+                email: '',
+                address: '',
+                city: '',
+                state: '',
+                zip: '',
+              }
+            ]
+
+              },
+              computed: {
+                cartItemCount: function() {
+                  const uniqueItemIds = new Set(this.cart);
+                  return uniqueItemIds.size;
+                },
+                canAddToCart: function(product) {
+                  return product.inventory > 0;
                 }
-            },
-            showCheckout() {
-            this.showproducts = this.showproducts ? false : true;
- },
- },
-          
-
-     // The Vue instance ends here. This Vue instance is now responsible for managing the data and methods of our application. It will render the DOM elements based on the data and methods defined in this Vue instance.
-     });
-        </script>
-        </body>
-    </html>
-    
+              },
+              methods: {
+                addToCart: function(product) {
+                  if (product.inventory > 0) {
+                    const cartSet = new Set(this.cart);
+                    cartSet.add(product.id);
+                    this.cart = Array.from(cartSet);
+                    product.inventory--;
+                  }
+                },
+                showCheckout() {
+                  this.showProduct = false;
+                },
+                showProductPage() {
+                  this.showProduct = true;
+                }
+              }
+            });     
+               </script>
+    </body>
+</html>

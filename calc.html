@@ -3,96 +3,105 @@
     <head>
         <meta charset="UTF-8">
         <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
+        <link rel="stylesheet" href="../style.css">
         <link
-            rel="stylesheet” href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/5.15.1/css/all.min.css">
+        <link rel="stylesheet” href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/5.15.1/css/all.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BlackWatch</title>
     </head>
+    
     <body>
-
-        <div id="app"><header>
-                <h1 v-text="sitename"></h1>
+        <div id="app">
+            <header>
+              <h1 id="header" v-text="sitename"></h1>
             </header>
-        
-        <div id="cart">
-            <button v-onclick='showCheckout'><!-- 'cartItemCount' is used the same way as a data property. -->
-                {{ cartItemCount}}
-                <!-- add the cart icon -->
+          
+            <div id="cart">
+              <button v-if="showProduct" v-on:click="showCheckout">  <!-- 'cartItemCount' is used the same way as a data property. -->
+                {{ cartItemCount }}
                 <span class="fas fa-cart-plus"></span> Checkout
-            </button>
-        </div>
-        <main>
-<div v-for="product in products" :key= "products.id">
-        
-           <img id="prodIm":src="products.image" :alt="products.title">
-            <h2 products.title></h2>
-            <p v-text="products.description"></p>
-            <p>Inventory: {{products.inventory}}</p>
-            <!-- The double curly brackets is used instead of 'v-text' -->
-            <p>Price: {{products.price}}</p>
-            <button v-on:click="addToCart" v-show="canAddToCart">
-                Add to cart
-            </button>
-            <button disabled='disabled' v-else>App to cart</button>
- 
-
-            <div v-if='showproducts'>
-                <!-- the code for the products page -->
+              </button><!-- add the cart icon -->
+              <button v-else v-on:click="showProductPage">
+                {{ cartItemCount }}
+                <span class="fas fa-cart-plus"></span> Back to Products
+              </button>
+            </div>
+          
+            <div v-if="showProduct">
+              <div class="productsStyle" v-for="product in products" :key="product.id">
+                <img :src="'images/' + product.image" alt="product image">
+                <h3>{{ product.title }}</h3>
+                <p>Price: ${{ product.price }}</p>
+                <p>Description: {{ product.description }}</p>
+                <p>Inventory: {{ product.inventory }}</p>
+                <div v-if="product.inventory > 0">
+                  <button @click="addToCart(product)">Add to Cart</button>
                 </div>
                 <div v-else>
-                <!-- the code for the checkout page -->
-                
+                  <p>Sorry, this product is currently out of stock.</p>
                 </div>
-                
+              </div>
             </div>
-        </main>
-    </div>
+          
+            <div v-else>
+              <!-- checkout code here -->
+              <h1>Checkout</h1>
+              <p>Thank you for shopping with us!</p>
+            </div>
+          </div>
 
-        <script type="text/javascript">
-        let webstore =  new Vue({ // The Vue instance
-        el: '#app', // The 'option object': DOM mounting point
-        data: { // the 'data' option
-// the key 'sitename' matches the value of 'v-text' earlier
-sitename: 'BlackWatch',
-products:
-[
-   { id: 100,
-    title: 'BlackWatch',
-    price: 199.99,
-    description: 'A stylish and comfortable watch',
-    image: '124.png',
-    inventory:10
-},
-{
-    id: 101,
-    title:" Fish Sticks",//MAKE A BABY OIL ONE diddy 
-    price: 99.99,
-    description: "A <em>delicious<em>'" + "treat for you and all your lovely pets",
-    image: 'images/12.png',
-    inventory:5
- }
-
-],
- cart:[]
-},
-computed:{
-    cartItemCount: function() {
-        return this.cart.length;
-    },
-    canAddToCart: function() {
-        return this.products.inventory > this.cartItemCount;
- },
-},
-        methods: { // the 'methods' option
-            addToCart: function() {
-                this.cart.push(this.products.id);
-            },
-            showCheckout() {
-            this.showproducts = this.showproducts ? false : true;
- },
-
-        }
-     });
-        </script>
-    </body>
-</html>
+          <script type="text/javascript">
+            let webstore = new Vue({
+              el: '#app',
+              data: {
+                sitename: 'BlackWatch',
+                products: [
+                  {
+                    id: 100,
+                    title: 'BlackWatch',
+                    price: 199.99,
+                    description: 'A stylish and comfortable watch',
+                    image: '124.png',
+                    inventory: 10
+                  },
+                  {
+                    id: 101,
+                    title: "Fish Sticks",
+                    price: 99.99,
+                    description: "A delicious treat for you and all your lovely pets",
+                    image: '12.png',
+                    inventory: 5
+                  }
+                ],
+                cart: [],
+                showProduct: true
+              },
+              computed: {
+                cartItemCount: function() {
+                  const uniqueItemIds = new Set(this.cart);
+                  return uniqueItemIds.size;
+                },
+                canAddToCart: function(product) {
+                  return product.inventory > 0;
+                }
+              },
+              methods: {
+                addToCart: function(product) {
+                  if (product.inventory > 0) {
+                    const cartSet = new Set(this.cart);
+                    cartSet.add(product.id);
+                    this.cart = Array.from(cartSet);
+                    product.inventory--;
+                  }
+                },
+                showCheckout() {
+                  this.showProduct = false;
+                },
+                showProductPage() {
+                  this.showProduct = true;
+                }
+              }
+            });
+          </script>    </body>
+    </html>
+    
