@@ -48,3 +48,25 @@ text-align: center;
 top:0px;
 position: relative;
 }
+.dropdown {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.dropdown button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.dropdown button:hover {
+    background-color: #f0f0f0; /* Highlight on hover */
+}
