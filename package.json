@@ -1,0 +1,9 @@
+{"name": "full-stack",
+ "author": "King Adaghe Williams",
+ "private": true,
+ "version": "0.2.0",
+  "dependencies": {
+    "init": "^0.1.2",
+    "mustache": "^4.2.0"
+  }
+}

@@ -4,9 +4,8 @@
         <meta charset="UTF-8">
         <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
         <link rel="stylesheet" href="../style.css">
-        <link
-            <link
-            rel="stylesheet” href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/5.15.1/css/all.min.css">
+        <link 
+            rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BlackWatch</title>
     </head>
@@ -18,30 +17,40 @@
             </header>
 
             <div id="cart">
+              
                 <button v-if="showProduct" v-on:click="showCheckout">
                     <!-- 'cartItemCount' is used the same way as a data property. -->
                     {{ cartItemCount }}
-                    <span class="fas fa-cart-plus"></span> Checkout
+                    <i class="fa fa-cart-plus" style="font-size:20px;"></i>
+                     Checkout
                 </button><!-- add the cart icon -->
                 <button v-else v-on:click="showProductPage">
                     <span class="fas fa-cart-plus"></span> Back to Products
                 </button>
             </div>
-            <div id="sort-buttons">
+          
+            <div v-if="showProduct">
+              <div class="topnav">
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                
+                <input type="text" placeholder="Search..">
+                
+              </div>
+              <div id="sort-buttons">
                 <button @click="toggleDropdown">Sort</button>
                 <div v-if="dropdownVisible" class="dropdown">
                   <button @click="sortProducts('price')">Sort by Price</button>
                   <button @click="sortProducts('alpha')">Sort Alphabetically</button>
                </div>
             </div>
-            <div v-if="showProduct">
                 <div class="productsStyle" v-for="product in products"
                     :key="product.id">
-                    <img :src="'images/' + product.image" alt="product image">
+                    <img :src="'images/' + product.image" alt="product image" id="productImage">
                     <h3>{{ product.title }}</h3>
                     <p>Price: ${{ product.price }}</p>
                     <p>Description: {{ product.description }}</p>
-                    <div>
+                    <div id="starRating">
                       <span v-for='n in product.rating'>★</span>
                       <span v-for='n in 5 - product.rating'>☆</span>
                      </div>
@@ -121,7 +130,15 @@
                     image: '12.png',
                     inventory: 5,
                     rating: 4
-                  }
+                  },
+                  {id:102,
+                    title: "Baby Oil",
+                    price: 1.50,
+                    description: 'Its Baby Oil',
+                    image: 'johnsons-baby-oil-200ml.jpg',
+                    inventory: 1000,
+                    rating: 5
+                  },
                 ],
                 cart: [],
                 showProduct: true,
@@ -204,16 +221,7 @@
         </script>
     </body>
 </html>
-methods: {
-  addToCart(course) {
-      let existingItem = this.cart.find(item => item.id === course.id);
-      if (existingItem) {
-          existingItem.quantity++;
-          course.inventory--;
-      } else {
-          this.cart.push({ ...course, quantity: 1 });
-          course.inventory--;
-      }
+<!-- 
   },
   removeOneFromCart(item) {
       let course = this.courses.find(c => c.id === item.id);
@@ -222,4 +230,4 @@ methods: {
       if (item.quantity === 0) {
           this.cart = this.cart.filter(i => i.id !== item.id);
       }
-  },
+  }, -->

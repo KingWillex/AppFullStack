@@ -174,7 +174,7 @@
                     }
                 
               },
-              methods: {
+              methods: { 
                 addToCart: function(product) {
                   if (product.inventory > 0) {
                     //const cartSet = new Set(this.cart);
@@ -204,17 +204,7 @@
         </script>
     </body>
 </html>
-methods: {
-  addToCart(course) {
-      let existingItem = this.cart.find(item => item.id === course.id);
-      if (existingItem) {
-          existingItem.quantity++;
-          course.inventory--;
-      } else {
-          this.cart.push({ ...course, quantity: 1 });
-          course.inventory--;
-      }
-  },
+
   removeOneFromCart(item) {
       let course = this.courses.find(c => c.id === item.id);
       course.inventory++;
