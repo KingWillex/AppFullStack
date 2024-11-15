@@ -19,8 +19,8 @@ app.use(express.json());
 client.connect()
   .then(() => {
     console.log('MongoDB connected...');
-    const db = client.db('FullStack-SubjectCatalog'); // database name 
-    const collection = db.collection('Subjects'); // collection name
+    const db = client.db('data'); // database name 
+    const collection = db.collection('products '); // collection name
         
     // Define a simple route
         app.get('/website', (req, res) => {
