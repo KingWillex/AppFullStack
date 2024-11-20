@@ -145,7 +145,8 @@
                   return uniqueItemIds.size;
                 },
                 canAddToCart: function(product) {
-                  return product.inventory > 0;
+                  var tempInventory =product.inventory
+                  return tempInventory> 0;
                 },
                 totalPrice: function() {
             
@@ -176,11 +177,11 @@
               },
               methods: { 
                 addToCart: function(product) {
-                  if (product.inventory > 0) {
-                    //const cartSet = new Set(this.cart);
-                    //cartSet.add(product.id);
+                  var tempInventory= product.inventory
+                  if (tempInventory > 0) {
+                   
                     this.cart.push((product.id)&&(product.price)) ;
-                    product.inventory--;
+                    tempInventory--;
                   }
                 },
                 showCheckout() {
@@ -204,12 +205,3 @@
         </script>
     </body>
 </html>
-
-  removeOneFromCart(item) {
-      let course = this.courses.find(c => c.id === item.id);
-      course.inventory++;
-      item.quantity--;
-      if (item.quantity === 0) {
-          this.cart = this.cart.filter(i => i.id !== item.id);
-      }
-  },

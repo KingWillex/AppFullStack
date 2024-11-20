@@ -55,12 +55,6 @@ let webstore = new Vue({
         return product.inventory > 0;
       },
       totalPrice: function() {
-  
-        // return this.cart.reduce((total, product) => {
-        //   console.log("total is: " +  total + "this is the: " + product + " result from parsing: " + product.price);
-        //   total += product.price;
-        //   return total ;
-        // }, 0);
         let total = 0;
         for (let index = 0; index < this.cart.length; index++) {
           const element = this.cart[index];
