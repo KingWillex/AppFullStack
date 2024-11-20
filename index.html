@@ -16,8 +16,8 @@
             </header>
 
             <div id="cart">
-                <button v-if="showProduct" v-on:click="showCheckout">
-                    <!-- 'cartItemCount' is used the same way as a data property. -->
+                <button v-if="showProduct" v-on:click="showCheckout":disabled="cart.length === 0">
+                    <!-- The :disabled="cart.length === 0" condition disables the "Checkout" button if the cart array is empty -->
                     {{ cartItemCount }}
                     <i class="fa fa-cart-plus" style="font-size:20px;"></i>
                     Checkout
@@ -31,7 +31,7 @@
                 <div class="topnav">
                     <a href="#about">About</a>
                     <a href="#contact">Contact</a>
-                    <input type="text" placeholder="Search..">
+                    <input id="searching" type="text" placeholder="Search.." v-model="searchQuery">
                 </div>
              
                 <div id="sort-buttons">
@@ -74,12 +74,17 @@
                 </p>
                 <p>
                     <strong>Last Name:</strong>
-                    <!-- This input field is bound to 'lastName' in the 'order' object -->
+                 
                     <input v-model="order.lastName" />
                 </p>
                 <p>
+                    <strong>Phone:</strong> 
+                    <input v-model="order.phone" />
+                    <span v-if="order.phone && order.phone.length !== 11" style="color:red;">Phone must be 11 digits.</span>
+                  </p>
+                <p>
                     <strong>Email:</strong>
-                    <!-- This input field is bound to 'email' in the 'order' object -->
+                  
                     <input v-model="order.email" />
                 </p>
                 <p>
@@ -88,6 +93,13 @@
                 <p>
                     <strong>City:</strong> <input v-model="order.city" />
                 </p>
+                <p>
+                    <strong>State:</strong> <input v-model="order.state" />
+                </p>
+                <p>
+                    <strong>Zip:</strong> <input v-model="order.zip" />
+                </p>
+                
 
                 <h2>Order Information</h2>
                 <p>First Name: {{order.firstName}}</p>
@@ -102,6 +114,7 @@
                 <ul>
                    <li v-for="item in cart" :key="item.id">
                       {{ item.name }} - Quantity: {{ item.quantity }} - Price: ${{ item.price }} each
+                      <button @click="removeFromCart(item)">Remove</button>
                    </li>
                 </ul>
                 <p>
