@@ -57,7 +57,7 @@ let webstore = new Vue({
 
     fetchProducts(query = '') {
       // Construct the URL with a search query if provided
-      const url = query ? `http://localhost:3000/search?q=${encodeURIComponent(query)}` : 'http://localhost:3000/products';
+      const url = query ? `http://localhost:3000/search?q=${encodeURIComponent(query)}` : 'https://back-end-fullstack-2.onrender.com/products';
     
       fetch(url) // Fetch data from the appropriate endpoint
         .then(response => {
