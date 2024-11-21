@@ -71,6 +71,7 @@ let webstore = new Vue({
           if (Array.isArray(data)) {
             this.products = data; // Assign the fetched data to `products`
             console.log('Fetched products:', this.products);
+            
           } else {
             console.error('Invalid data received/format:', data);
           }

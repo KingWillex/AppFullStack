@@ -44,7 +44,7 @@
                 <div class="center-wrapper ">
                 <div class="products-container">
                 <div class="productsStyle" v-for="product in products">
-                    <img :src="'' + product.image" alt="product image" id="productImage">
+                    <img :src="product.image" alt="product image" id="productImage">
                     <h3>{{ product.title }}</h3>
                     <p>Price: ${{ product.price }}</p>
                     <p>Description: {{ product.description }}</p>
