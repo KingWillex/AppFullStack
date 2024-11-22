@@ -57,7 +57,7 @@ let webstore = new Vue({
 
     fetchProducts(query = '') {
       // Construct the URL with a search query if provided
-      const url = query ? `http://localhost:3000/search?q=${encodeURIComponent(query)}` : 'https://back-end-fullstack-2.onrender.com/products';
+      const url = query ? `https://back-end-fullstack-2.onrender.com/search?q=${encodeURIComponent(query)}` : 'https://back-end-fullstack-2.onrender.com/products';
     
       fetch(url) // Fetch data from the appropriate endpoint
         .then(response => {
@@ -172,7 +172,7 @@ let webstore = new Vue({
       };
 
       // Send a POST request to the server to save the order
-      fetch('http://localhost:3000/order', {
+      fetch('https://back-end-fullstack-2.onrender.com/order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -197,7 +197,7 @@ let webstore = new Vue({
 
     updateInventory() {
        this.cart.forEach(item => {
-      fetch(`http://localhost:3000/products/${item.id}/purchase`, {
+      fetch(`https://back-end-fullstack-2.onrender.com/products/${item.id}/purchase`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
